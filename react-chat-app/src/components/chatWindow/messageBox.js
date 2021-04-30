@@ -9,8 +9,8 @@ export default class MessageBox extends Component {
     };
     this.sendMessageToServer = this.sendMessageToServer.bind(this);
   }
-
   handleMessageText(e) {
+    console.log("msgs", this.state.msgText);
     this.setState({ msgText: e.target.value });
   }
 
@@ -104,6 +104,12 @@ export default class MessageBox extends Component {
               placeholder="Write Message.."
               value={this.state.msgText}
               onChange={(e) => this.handleMessageText(e)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  this.sendMessageToServer();
+                  e.preventDefault();
+                }
+              }}
             ></input>
             <div className="icons py-2 w-1/5 text-center flex">
               <i className="las la-grin p-2 text-xl"></i>

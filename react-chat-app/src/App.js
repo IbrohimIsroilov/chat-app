@@ -46,8 +46,10 @@ export default class ChatApp extends Component {
           dummySignalServer: {JSON.stringify(this.state.dummySignalServer)}
         </div>
         <div>
-          signalProtocolManagerUser:{" "}
-          {JSON.stringify(this.state.signalProtocolManagerUser)}
+          <pre>
+            signalProtocolManagerUser:{" "}
+            {JSON.stringify(this.state.signalProtocolManagerUser, null, 2)}
+          </pre>
         </div>
         {!this.state.isLoggedIn && <Login loginProp={this.setLoggedinUser} />}
         {this.state.isLoggedIn && (
