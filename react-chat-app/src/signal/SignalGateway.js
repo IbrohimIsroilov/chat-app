@@ -160,7 +160,7 @@ class SignalProtocolManager {
       libsignal.KeyHelper.generateIdentityKeyPair(),
       libsignal.KeyHelper.generateRegistrationId(),
     ]);
-
+    console.log("IDENTITY KEY PAIR and REGISTRATIONID", results);
     this.store.put("identityKey", results[0]);
     this.store.put("registrationId", results[1]);
   }

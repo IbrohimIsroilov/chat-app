@@ -47,11 +47,13 @@ export default class ChatWindow extends Component {
     };
 
     ws.onmessage = async (e) => {
+      console.log("strabdfbvdfvb ", e);
       let newMessage = JSON.parse(e.data);
       console.log("this is the incoming message", newMessage);
       // In case message is from self, save state-stored message to Chats i.e. no need of using/decrypting the received message
       // This is only for verifying that the messages have successfully been received.
       if (newMessage.senderid === this.props.loggedInUserObj._id) {
+        console.log("this is if clause");
         newMessage.message = this.state.lastSentMessage;
       } else {
         // Otherwise decrypt it and then save to Chats
@@ -128,6 +130,7 @@ export default class ChatWindow extends Component {
       receiverid: this.state.messageToUser._id,
       ...newMsgObj,
     };
+    console.log("NEWMSGOBJ", newMsgObj);
     // Send Message for Encryption to Signal Server, then send the Encrypted Message to Push server
     try {
       let encryptedMessage = await this.props.signalProtocolManagerUser.encryptMessageAsync(

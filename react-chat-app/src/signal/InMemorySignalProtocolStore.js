@@ -1,6 +1,6 @@
 import util from "./helpers";
 
-const libsignal = window.libsignal
+const libsignal = window.libsignal;
 
 function SignalProtocolStore() {
   this.store = {};
@@ -13,13 +13,19 @@ SignalProtocolStore.prototype = {
   },
 
   getIdentityKeyPair: function () {
-    return Promise.resolve(this.get('identityKey'));
+    return Promise.resolve(this.get("identityKey"));
   },
   getLocalRegistrationId: function () {
-    return Promise.resolve(this.get('registrationId'));
+    return Promise.resolve(this.get("registrationId"));
   },
   put: function (key, value) {
-    if (key === undefined || value === undefined || key === null || value === null)
+    console.log("these are the values for initialize async", key, value);
+    if (
+      key === undefined ||
+      value === undefined ||
+      key === null ||
+      value === null
+    )
       throw new Error("Tried to store undefined/null");
     this.store[key] = value;
   },
@@ -45,16 +51,18 @@ SignalProtocolStore.prototype = {
     if (!(identityKey instanceof ArrayBuffer)) {
       throw new Error("Expected identityKey to be an ArrayBuffer");
     }
-    var trusted = this.get('identityKey' + identifier);
+    var trusted = this.get("identityKey" + identifier);
     if (trusted === undefined) {
       return Promise.resolve(true);
     }
-    return Promise.resolve(util.toString(identityKey) === util.toString(trusted));
+    return Promise.resolve(
+      util.toString(identityKey) === util.toString(trusted)
+    );
   },
   loadIdentityKey: function (identifier) {
     if (identifier === null || identifier === undefined)
       throw new Error("Tried to get identity key for undefined/null key");
-    return Promise.resolve(this.get('identityKey' + identifier));
+    return Promise.resolve(this.get("identityKey" + identifier));
   },
   saveIdentity: function (identifier, identityKey) {
     if (identifier === null || identifier === undefined)
@@ -62,59 +70,58 @@ SignalProtocolStore.prototype = {
 
     var address = new libsignal.SignalProtocolAddress.fromString(identifier);
 
-    var existing = this.get('identityKey' + address.getName());
-    this.put('identityKey' + address.getName(), identityKey)
+    var existing = this.get("identityKey" + address.getName());
+    this.put("identityKey" + address.getName(), identityKey);
 
     if (existing && util.toString(identityKey) !== util.toString(existing)) {
       return Promise.resolve(true);
     } else {
       return Promise.resolve(false);
     }
-
   },
 
   /* Returns a prekeypair object or undefined */
   loadPreKey: function (keyId) {
-    var res = this.get('25519KeypreKey' + keyId);
+    var res = this.get("25519KeypreKey" + keyId);
     if (res !== undefined) {
       res = { pubKey: res.pubKey, privKey: res.privKey };
     }
     return Promise.resolve(res);
   },
   storePreKey: function (keyId, keyPair) {
-    return Promise.resolve(this.put('25519KeypreKey' + keyId, keyPair));
+    return Promise.resolve(this.put("25519KeypreKey" + keyId, keyPair));
   },
   removePreKey: function (keyId) {
-    return Promise.resolve(this.remove('25519KeypreKey' + keyId));
+    return Promise.resolve(this.remove("25519KeypreKey" + keyId));
   },
 
   /* Returns a signed keypair object or undefined */
   loadSignedPreKey: function (keyId) {
-    var res = this.get('25519KeysignedKey' + keyId);
+    var res = this.get("25519KeysignedKey" + keyId);
     if (res !== undefined) {
       res = { pubKey: res.pubKey, privKey: res.privKey };
     }
     return Promise.resolve(res);
   },
   storeSignedPreKey: function (keyId, keyPair) {
-    return Promise.resolve(this.put('25519KeysignedKey' + keyId, keyPair));
+    return Promise.resolve(this.put("25519KeysignedKey" + keyId, keyPair));
   },
   removeSignedPreKey: function (keyId) {
-    return Promise.resolve(this.remove('25519KeysignedKey' + keyId));
+    return Promise.resolve(this.remove("25519KeysignedKey" + keyId));
   },
 
   loadSession: function (identifier) {
-    return Promise.resolve(this.get('session' + identifier));
+    return Promise.resolve(this.get("session" + identifier));
   },
   storeSession: function (identifier, record) {
-    return Promise.resolve(this.put('session' + identifier, record));
+    return Promise.resolve(this.put("session" + identifier, record));
   },
   removeSession: function (identifier) {
-    return Promise.resolve(this.remove('session' + identifier));
+    return Promise.resolve(this.remove("session" + identifier));
   },
   removeAllSessions: function (identifier) {
     for (var id in this.store) {
-      if (id.startsWith('session' + identifier)) {
+      if (id.startsWith("session" + identifier)) {
         delete this.store[id];
       }
     }
@@ -123,17 +130,17 @@ SignalProtocolStore.prototype = {
 
   /* Stores and loads a session cipher */
   storeSessionCipher(identifier, cipher) {
-    this.put('cipher' + identifier, cipher);
+    this.put("cipher" + identifier, cipher);
   },
   loadSessionCipher(identifier) {
-    var cipher = this.get('cipher' + identifier);
+    var cipher = this.get("cipher" + identifier);
 
     if (cipher == undefined) {
       return null;
     } else {
       return cipher;
     }
-  }
+  },
 };
 
-export default SignalProtocolStore
+export default SignalProtocolStore;
