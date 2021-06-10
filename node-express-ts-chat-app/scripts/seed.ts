@@ -4,7 +4,7 @@ const path = require("path");
 
 const config = {
   database:
-    "mongodb+srv://admin-test-chat:pAw6sd1yNHXSmyIL@tokyocluster.5iimq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mongodb+srv://1808707ii:1808707ii@cluster0.o23ru.mongodb.net/Capstone?retryWrites=true&w=majority",
   dropDatabase: false,
 };
 
