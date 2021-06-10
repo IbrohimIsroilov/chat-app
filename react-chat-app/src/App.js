@@ -40,17 +40,7 @@ export default class ChatApp extends Component {
   render() {
     return (
       <div className="App">
-        <div>isLoggedIn: {JSON.stringify(this.state.isLoggedIn)}</div>
-        <div>loggedInUserObj: {JSON.stringify(this.state.loggedInUserObj)}</div>
-        <div>
-          dummySignalServer: {JSON.stringify(this.state.dummySignalServer)}
-        </div>
-        <div>
-          <pre>
-            signalProtocolManagerUser:{" "}
-            {JSON.stringify(this.state.signalProtocolManagerUser, null, 2)}
-          </pre>
-        </div>
+        <div></div>
         {!this.state.isLoggedIn && <Login loginProp={this.setLoggedinUser} />}
         {this.state.isLoggedIn && (
           <ChatWindow

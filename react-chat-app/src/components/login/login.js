@@ -70,9 +70,7 @@ export default class Login extends Component {
               Login
             </button>
           </form>
-          <p className="text-center text-gray-500 text-xs">
-            &copy;2020 QED42. All rights reserved.
-          </p>
+          <p className="text-center text-gray-500 text-xs"></p>
         </div>
       </div>
     );
